@@ -45,3 +45,10 @@
 @import "./blocks/popup-illustration/popup-illustration.css";
 @import "./blocks/popup-illustration/__img/popup-illustration__img.css";
 @import "./blocks/popup-illustration/__title/popup-illustration__title.css";
+@import "./blocks/authentication/authentication.css";
+@import "./blocks/authentication/__form/authentication__form.css";
+@import "./blocks/authentication/__title/authentication__title.css";
+@import "./blocks/authentication/__input/authentication__input.css";
+@import "./blocks/authentication/__submit-button/authentication__submit-button.css";
+@import "./blocks/authentication/__subtitle/authentication__subtitle.css";
+@import "./blocks/authentication/__subtitle-link/authentication__subtitle-link.css";
