@@ -1,7 +1,7 @@
 .header__authentication {
   font-size: 18px;
   line-height: 22px;
-  margin: 51px 0;
+  margin: 51px 0 46px 0;
 }
 
 @media (max-width: 768px) {
