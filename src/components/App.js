@@ -1,15 +1,21 @@
+import React from 'react';
+import { Route, Switch } from 'react-router-dom'
 import Footer from './Footer';
 import Header from './Header';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
-import React from 'react';
-import { api } from '../utils/api';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import Login from './Login';
+import Register from './Register';
+import { api } from '../utils/api';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
 
 function App() {
+  // Добавить loggedIn
+  
   const [isEditProfilePopupOpen, setEditProfilePopupOpenActive] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpenActive] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpenActive] = React.useState(false);
@@ -96,15 +102,25 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-          <Header />
-          <Main onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onEditAvatar={handleEditAvatarClick}
-                onCardClick={handleCardClick}
-                cards={cards}
-                onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete} />
-          <Footer />
+          <Switch>
+            <Route exact path="/">
+              <Header />
+              <Main onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onCardClick={handleCardClick}
+                    cards={cards}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete} />
+              <Footer />
+            </Route>
+            <Route path="/sign-up">
+              <Register />
+            </Route>
+            <Route path="/sign-in">
+              <Login />
+            </Route>
+          </Switch>
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateAvatar} />
