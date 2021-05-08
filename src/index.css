@@ -4,6 +4,9 @@
 @import "./blocks/page/page.css";
 @import "./blocks/header/header.css";
 @import "./blocks/header/__logo/header__logo.css";
+@import "./blocks/header/__email/header__email.css";
+@import "./blocks/header/__authentication/header__authentication.css";
+@import "./blocks/header/__authentication-link/header__authentication-link.css";
 @import "./blocks/main/main.css";
 @import "./blocks/profile/profile.css";
 @import "./blocks/profile/__photo/profile__photo.css";

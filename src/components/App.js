@@ -102,17 +102,17 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
+        <Header />
           <Switch>
             <Route exact path="/">
-              <Header />
-              <Main onEditProfile={handleEditProfileClick}
+            <Main onEditProfile={handleEditProfileClick}
                     onAddPlace={handleAddPlaceClick}
                     onEditAvatar={handleEditAvatarClick}
                     onCardClick={handleCardClick}
                     cards={cards}
                     onCardLike={handleCardLike}
                     onCardDelete={handleCardDelete} />
-              <Footer />
+            <Footer />
             </Route>
             <Route path="/sign-up">
               <Register />

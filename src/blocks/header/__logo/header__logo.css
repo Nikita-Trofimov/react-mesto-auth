@@ -4,7 +4,6 @@
   width: 142px;
   height: 33px;
   padding: 45px 0 41px 0;
-  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
