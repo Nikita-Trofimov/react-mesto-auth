@@ -146,6 +146,11 @@ function App() {
     .catch((err) => console.log('Ошибка ' + err));
   }
 
+  function onLogOut() {
+    localStorage.removeItem("token");
+    setloggedIn(false);
+  }
+
   React.useEffect(() => {
     tokenCheck()
   }, []);
@@ -158,7 +163,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-        <Header userEmail={userEmail} />
+        <Header userEmail={userEmail} onLogOut={onLogOut} />
           <Switch>
             <ProtectedRoute 
               exact path="/"
