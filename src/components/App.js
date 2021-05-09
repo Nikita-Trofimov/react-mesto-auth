@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Redirect, Route, Switch, useHistory} from 'react-router-dom'
 import Header from './Header';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
@@ -23,9 +23,9 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
-  const [isRegistration, setisRegistration] = React.useState(false);
+  const [isRegistration, setIsRegistration] = React.useState(false);
 
-  
+  const history = useHistory();
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -105,22 +105,29 @@ function App() {
   }
 
   function handleSignIn({ password, email }) {
-    apiAuth.signin(password, email).then(res => console.log(res));
+    apiAuth.signin(password, email)
+    .then((res) => {
+      setloggedIn(true);
+      history.push("/");
+    })
+    .catch((err) =>  {
+      console.log('Ошибка ' + err);
+    });
   }
 
   function handleRegister( { password, email} ) {
     apiAuth.register(password, email)
     .then(() => {
-      setisRegistration(true);
-      setIsInfoTooltipPopupOpen(true)
+      setIsRegistration(true);
+      setIsInfoTooltipPopupOpen(true);
+      history.push("/sign-in");
     })
     .catch((err) => {
-      setisRegistration(false);
+      setIsRegistration(false);
       setIsInfoTooltipPopupOpen(true);
-      console.log('Ошибка ' + err)
+      console.log('Ошибка ' + err);
     });
   }
-  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
