@@ -1,12 +1,12 @@
 import {Switch, Route, Link} from "react-router-dom";
-function Header() {
+function Header({userEmail}) {
   return (
     <Switch>
       <Route exact path="/">
         <header className="header">
           <div className="header__logo"></div>
           <nav className="header__authentication">
-            <span className="header__email">email</span>
+            <span className="header__email">{userEmail}</span>
             <Link to="/sign-in" className="header__authentication-link">Выйти</Link>  
           </nav>
         </header>    

@@ -35,12 +35,12 @@ class ApiAuth {
     }).then(this._checkResponse);
   }
 
-  checkToken(jwt) {
+  checkToken(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${jwt}`
+        "Authorization" : `Bearer ${token}`
       } ,
     }).then(this._checkResponse);
   }

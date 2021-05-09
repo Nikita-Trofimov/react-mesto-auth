@@ -22,7 +22,8 @@ function Login ({ onLogin }) {
       <form className="authentication__form">
         <h2 className="authentication__title">Вход</h2>
         <input value={email} onChange={handleChangeEmail} name="email" type="email" placeholder="Email" className="authentication__input"/>
-        <input value={password} onChange={handleChangePassword} name="password" type="password" placeholder="Пароль" className="authentication__input" />
+        <input value={password} onChange={handleChangePassword} 
+        name="password" type="password" placeholder="Пароль" className="authentication__input" autoComplete="on"/>
         <button  type="submit" onClick={handleLoginSubmit} className="authentication__submit-button">Войти</button>
       </form>  
     </section>

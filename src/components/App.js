@@ -24,6 +24,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [isRegistration, setIsRegistration] = React.useState(false);
+  const [userEmail, setUserEmail] = React.useState('');
 
   const history = useHistory();
 
@@ -108,6 +109,8 @@ function App() {
     apiAuth.signin(password, email)
     .then((res) => {
       setloggedIn(true);
+      setUserEmail(email);
+      localStorage.setItem('token', res.token);
       history.push("/");
     })
     .catch((err) =>  {
@@ -129,11 +132,33 @@ function App() {
     });
   }
 
+  function tokenCheck() {
+    let token = localStorage.getItem('token')
+    if (!token) {
+      return;
+    }
+
+    apiAuth.checkToken(token)
+    .then(({ data }) => {
+      setloggedIn(true);
+      setUserEmail(data.email);
+    })
+    .catch((err) => console.log('Ошибка ' + err));
+  }
+
+  React.useEffect(() => {
+    tokenCheck()
+  }, []);
+
+  React.useEffect(() =>{
+    history.push("/");
+  }, [loggedIn]);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-        <Header />
+        <Header userEmail={userEmail} />
           <Switch>
             <ProtectedRoute 
               exact path="/"
