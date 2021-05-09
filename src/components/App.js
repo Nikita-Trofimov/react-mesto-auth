@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom'
-import Footer from './Footer';
 import Header from './Header';
 import Main from './Main';
 import ImagePopup from './ImagePopup';
@@ -10,10 +9,10 @@ import AddPlacePopup from './AddPlacePopup';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from './InfoTooltip';
 import { api } from '../utils/api';
+import { apiAuth } from '../utils/apiAuth';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
-
 
 function App() {
   const [loggedIn, setloggedIn] = React.useState(false);
@@ -23,6 +22,8 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
+  const [isRegistration, setisRegistration] = React.useState(false);
 
   
 
@@ -73,10 +74,12 @@ function App() {
     setIsEditAvatarPopupOpenActive(false);
     setAddPlacePopupOpenActive(false);
     setEditProfilePopupOpenActive(false);
+    setIsInfoTooltipPopupOpen(false);
     setSelectedCard(null);
   }
   function handleUpdateUser({ name, about }) {
-    api.updateProfile(name, about).then((profile) => {
+    api.updateProfile(name, about)
+    .then((profile) => {
       setCurrentUser(profile);
       closeAllPopups();
     })
@@ -84,7 +87,8 @@ function App() {
   }
 
   function handleUpdateAvatar(avatar) {
-    api.udpateAvatar(avatar).then((profile) => {
+    api.udpateAvatar(avatar)
+    .then((profile) => {
       setCurrentUser(profile);
       closeAllPopups();
     })
@@ -92,13 +96,31 @@ function App() {
   }
 
   function handleAddPlaceSubmit({name, link}) {
-    api.addCard(name, link).then((card) => {
+    api.addCard(name, link)
+    .then((card) => {
       setCards([card, ...cards])
       closeAllPopups();
     })
     .catch(err => console.log('Ошибка ' + err));
-    
   }
+
+  function handleSignIn({ password, email }) {
+    apiAuth.signin(password, email).then(res => console.log(res));
+  }
+
+  function handleRegister( { password, email} ) {
+    apiAuth.register(password, email)
+    .then(() => {
+      setisRegistration(true);
+      setIsInfoTooltipPopupOpen(true)
+    })
+    .catch((err) => {
+      setisRegistration(false);
+      setIsInfoTooltipPopupOpen(true);
+      console.log('Ошибка ' + err)
+    });
+  }
+  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -118,10 +140,10 @@ function App() {
               onCardLike={handleCardLike}
               onCardDelete={handleCardDelete} /> 
             <Route path="/sign-up">
-              <Register />
+              <Register onRegister={handleRegister} />
             </Route>
             <Route path="/sign-in">
-              <Login />
+              <Login onLogin={handleSignIn} />
             </Route>
             <Route path="*">
               {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" /> }
@@ -131,6 +153,7 @@ function App() {
           <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateAvatar} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+          <InfoTooltip isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} isRegistration={isRegistration} />
         </div>
       </div>
     </CurrentUserContext.Provider>

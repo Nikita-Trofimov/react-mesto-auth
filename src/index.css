@@ -52,3 +52,5 @@
 @import "./blocks/authentication/__submit-button/authentication__submit-button.css";
 @import "./blocks/authentication/__subtitle/authentication__subtitle.css";
 @import "./blocks/authentication/__subtitle-link/authentication__subtitle-link.css";
+@import "./blocks/info-tooltip/__img/info-tooltip__img.css";
+@import "./blocks/info-tooltip/__text/info-tooltip__text.css";
