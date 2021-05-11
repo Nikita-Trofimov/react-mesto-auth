@@ -133,7 +133,7 @@ function App() {
   }
 
   function tokenCheck() {
-    let token = localStorage.getItem('token')
+    const token = localStorage.getItem('token')
     if (!token) {
       return;
     }
